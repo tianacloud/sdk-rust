@@ -1,0 +1,9 @@
+{
+  "contracts_distribution_commit": "59b3b4654511eb01b6d0c350fff8b7e22bbb0268",
+  "contract_identity": "tiana.fetch-v1-conformance.1",
+  "source_commit": "d252fd7bf689657e50b6caf36298f8c57860df6b",
+  "manifest_sha256": "73cd9539f85a00be78a6b311af3941b5b554ee19e480bfc18f8056e3cff460cc",
+  "role": "sdk-rust-connect",
+  "consumer_repository": "sdk-rust",
+  "consumer_baseline": "19c9c7da28f17c11700d515153cdecea600efe44"
+}

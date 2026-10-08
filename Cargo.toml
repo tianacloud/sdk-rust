@@ -1,0 +1,45 @@
+[package]
+name = "tiana-sdk"
+version = "0.1.0-dev.5"
+edition = "2024"
+rust-version = "1.85"
+license = "Apache-2.0"
+description = "Tiana TLS 1.3 and HTTP/2 generic channel SDK"
+repository = "https://github.com/tianacloud/sdk-rust"
+readme = "README.md"
+# Development releases are distributed through immutable Git tags and
+# checked source artifacts. Never allow an accidental crates.io publication.
+publish = false
+autobins = false
+
+[features]
+default = []
+# Internal diagnostics only; never enable for distributed builds.
+internal-debug-tls = []
+
+[lib]
+name = "tiana_sdk"
+path = "src/lib.rs"
+
+[dependencies]
+base64 = "=0.22.1"
+bytes = "=1.12.1"
+getrandom = "=0.3.4"
+h2 = "=0.4.16"
+http = "=1.5.0"
+rustls = { version = "=0.23.43", default-features = false, features = ["std", "ring"] }
+tokio = { version = "=1.53.1", features = ["io-util", "macros", "net", "rt-multi-thread", "sync", "time"] }
+tokio-rustls = { version = "=0.26.4", default-features = false, features = ["ring"] }
+webpki-roots = "=1.0.6"
+zeroize = "=1.8.2"
+
+[dev-dependencies]
+sha2 = "=0.10.9"
+
+[lints.rust]
+unsafe_code = "forbid"
+
+[lints.clippy]
+dbg_macro = "deny"
+todo = "deny"
+undocumented_unsafe_blocks = "deny"

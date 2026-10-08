@@ -1,0 +1,5 @@
+{
+  "authority_version": 1,
+  "endpoint_suffix": ".db.service.internal.tiana.com",
+  "default_port": 443
+}

@@ -1,0 +1,653 @@
+{
+  "format_version": 1,
+  "contract_identity": "tiana.fetch-v1-conformance.1",
+  "source_commit": "d252fd7bf689657e50b6caf36298f8c57860df6b",
+  "source_version": "v0.17.2-rc.1",
+  "fixture_tree_sha256": "0e49b8e80130f6ed47a12222803b4019a6904dc9cc610033bbd01cf0a7875637",
+  "manifest_sha256": "73cd9539f85a00be78a6b311af3941b5b554ee19e480bfc18f8056e3cff460cc",
+  "manifest_hash_rule": "sha256 of the exact UTF-8 manifest after replacing manifest_sha256 with 64 ASCII zeroes",
+  "wire": {
+    "fetch_request_magic": "TFQ1",
+    "fetch_response_magic": "TFS1",
+    "fetch_path": "/v1/fetch",
+    "fetch_media_type": "application/vnd.tiana.fetch.v1",
+    "fetch_error_media_type": "application/json",
+    "tls_version": "1.3",
+    "alpn": [
+      "h2",
+      "http/1.1"
+    ],
+    "public_authority_suffix": ".db.service.internal.tiana.com",
+    "public_authority_port": 443,
+    "outer_authorization_pattern": "^Bearer tia_[A-Za-z0-9_-]{42}[AEIMQUYcgkosw048]$",
+    "automatic_retry": false,
+    "post_commit_replay": false,
+    "max_outer_header_bytes": 32768,
+    "max_metadata_bytes": 65536,
+    "max_headers": 128,
+    "max_header_name_bytes": 256,
+    "max_header_value_bytes": 16384,
+    "max_path_query_bytes": 16384,
+    "max_request_body_bytes": 16777216,
+    "max_response_body_bytes": 16777216,
+    "max_relay_buffer_bytes": 262144,
+    "max_concurrent_fetch": 256,
+    "max_request_duration_ms": 30000,
+    "max_retry_after_ms": 60000,
+    "max_status_text_bytes": 128
+  },
+  "files": {
+    "conformance/v1/schema.json": "bc5e51ede57e27b67a096f279e5140d58d3f2dac6a0329123d3179b9c1b8f905",
+    "conformance/v1/baseline/v1-authority.sha256": "d60373c385ad76dfabc42f1370a8c5196b0daf9bb6cda3a03d3351242ffa3837",
+    "conformance/v1/corpus/positive.json": "d500ccc77335d9ba3476d986aff5880b17a1decb147030272ba10248a2ec5490",
+    "conformance/v1/corpus/negative.json": "3fbc9553707e7bfbcca40af10d50a6638366cd302c1121a7b26dd8c60a4ac6d0",
+    "conformance/v1/corpus/public-envelope.json": "6194a2742885f47fb642a70e0603945d1ef22f8efd5807b6ac955da8e7e96ef2",
+    "schemas/fetch-v1.schema.json": "6cea7b29705617a2d0e2b9196723504f2e26c07c06e43a2440a489bd56b55b75",
+    "protocols/fetch-over-https-v1.md": "1ed54cd150721e77ce6924bd7d1de2216e4e6f5cf60636429c3491112599c394",
+    "protocols/public-connect-v1.md": "b9e6fcecb4e09b5c36e025377ee1288d976dde5b8300ff18fa56a07f2f790a3d",
+    "fixtures/fetch/request-post-golden.hex": "2c71dd0c340fb0f45dc1b6943b1d9739826480f515f0570e0cf9ab13dd023a7a",
+    "fixtures/fetch/request-post-metadata.json": "f6e6457d325a4d11f278a90efb9dc65e1d098cf33f5b282705fd38853aa5f586",
+    "fixtures/fetch/response-200-golden.hex": "ecade90b903fd2220810a1e8cccc2ac794a525c55ace846fe89153e563a1dbc0",
+    "fixtures/fetch/response-200-metadata.json": "b9e85572d86dc28610e2524c21184a3d5742861e6df652c31f3f8a37a0a7fad4",
+    "fixtures/fetch/request-ts-null-metadata.json": "e5083fea40871cd718fad5d2886644a01345d986150911ff23539b74e212167f",
+    "fixtures/fetch/response-ts-null-metadata.json": "a01768466cbc0e03ce505cac27232bd013623a7ecdac2de2fb71825aea65ffee",
+    "fixtures/fetch/error-access-denied.json": "e7ca682447971b802afb80f7ce1870f568376771d153afa1ba6b3b127ad20b15",
+    "fixtures/fetch/error-auth-required.json": "d8e7512664933ffc9ece44aa8e1a3c96b1129ea77ca6b35996b4ee0fa06f3b78",
+    "fixtures/fetch/error-bad-gateway.json": "e3d53369191933c09da1f2f7147cc4da974381555bf54ba33829099537231892",
+    "fixtures/fetch/error-endpoint-not-found.json": "d9e61364bb675cb82014ecf536c6c6171a6d94b8cf41f40f2cb8efacaabcc5dc",
+    "fixtures/fetch/error-internal.json": "78524663489a2241a4b1787968e043d6362fcd7e04fb3fcaa99fa7da96ad5b56",
+    "fixtures/fetch/error-invalid-argument.json": "79fe7a3b4c28ee960b211bd61a17f8823a08e3cc5de17458f4a044eb32d29b8c",
+    "fixtures/fetch/error-method-not-allowed.json": "c231838007f34314a5d701e49c3623ec9ac3c67dfa546a6617109e7cc39a0f26",
+    "fixtures/fetch/error-payload-too-large.json": "c11c74a6e2a3aa058abe7d6549a8724ed9944006feb38814dc10985b010a4f45",
+    "fixtures/fetch/error-rate-limited.json": "4969da346da01820b9b1d8392dd501f4fa60f80013906e5ddb9e68479babec71",
+    "fixtures/fetch/error-request-timeout.json": "8a7438bbef4c2f04c139159b4faf19447b3695f494aadb94918037e9a5752883",
+    "fixtures/fetch/error-timeout.json": "f2c59555303f7896ffd8a393ced2d56f00c6ea6d34d2aceba8ba3dc4e936ee3a",
+    "fixtures/fetch/error-unavailable.json": "af24faeaea2bd09900564a3cb872ed2dc4dd58c75467ec1d44a350b390a0dd3b",
+    "fixtures/fetch/error-unsupported-media-type.json": "615d828af7d18b88c6e63c6fd63d7155646d3e1a5767310c39652bd69f743b79",
+    "fixtures/gateway/public-connect-authority-v1.json": "683229edc8886b985ff6b29a99dd34da90bec9db15f6012aa12b07623d2658dc",
+    "fixtures/negative/fetch/error-duplicate-retry-after.json": "2bc154fc39877005e938d63dc7b34a4c58ada97fcaa0fa9dcfa4041c705293b1",
+    "fixtures/negative/fetch/error-nonretry-retry-after.json": "bbb69dbaf6115167112eb46d5917eca97c6851bccfb66f0397b0a08f7c6f64ca",
+    "fixtures/negative/fetch/error-rate-limited-fractional.json": "5de1099cf0ea6532da64ec0987c591370d2935e8ad72ba7109bad4a179254fe2",
+    "fixtures/negative/fetch/error-rate-limited-missing.json": "8ff126b9179730af6b632ac128927175af87b44c7dd4de53b74dce2a8bedb83a",
+    "fixtures/negative/fetch/error-rate-limited-negative.json": "12a99dd02cf04b23c4e872c986c9c99406f5e09b0eefd069b46b6053594c9d58",
+    "fixtures/negative/fetch/error-rate-limited-null.json": "71a062275e208e29d4f6f1bf0aa0a6dbb37bc928d841267be6cb26a9ea802ce4",
+    "fixtures/negative/fetch/error-rate-limited-string.json": "54c93ae0390596b1d584a721a234c6e4390953f7a5425fbf795c2c70db3bf37a",
+    "fixtures/negative/fetch/error-rate-limited-too-large.json": "98c22406ab15dd2e4d03f7209e7e5945144bfb287590b36c6578bb2749c5d708",
+    "fixtures/negative/fetch/error-rate-limited-zero.json": "cc0ad1b9aa58592da4d85f098dfe2251ad051f3af2d6e8fc88f9804f506da570",
+    "fixtures/negative/fetch/error-unknown-field.json": "2bc66ce0d707ca89e9abddf7a05f37a18d5d5165d92a9935f363c30fd5aa3950",
+    "fixtures/negative/fetch/error-wrong-tuple.json": "301b6f01c0b02d5cfa334f02db0101c00a0c6b0bf871742a9f35f50212ea9283",
+    "fixtures/negative/fetch/invalid-magic.hex": "85dfa08575918be0c7e3fd07aaa465544381e9e2c2170ff91bf5f8689d8e42b8",
+    "fixtures/negative/fetch/metadata-too-large.hex": "15121c40a9670cf537f4bc407424d84e2b149dc31094224785bc8d69d394c642",
+    "fixtures/negative/fetch/metadata-truncated.hex": "3b15b9d9748465ee7aec8ea9e9a1f9e69f9b9e87dac695e234a02cf248ea86ad",
+    "fixtures/negative/fetch/nonzero-flags.hex": "23374b413ddddf0d8c57877ad1479e810f8f46e646df8bf623a7f284e79aba88",
+    "fixtures/negative/fetch/request-accept-encoding.hex": "ccbb20114631dca30564d20247799f59d24383144756a31e62b881eb47ff0ed9",
+    "fixtures/negative/fetch/request-duplicate-authorization.hex": "5be4f0df18ad4a28c6f612fffaa185df9faee784f7826d0724622b3e04e15e0e",
+    "fixtures/negative/fetch/request-duplicate-method.hex": "d3d8076d0079d27eac209dc2c559bfc6b4f95c57894588c66338d88bb9e22732",
+    "fixtures/negative/fetch/request-expect.hex": "6b7589bd03490740de1132e7d0c2456d39cc3cbd9304cee4b06529de231be0af",
+    "fixtures/negative/fetch/request-get-body.hex": "58e8c0c2ae6d28a08d8c6c3a05df30220c7da1499a2d410034a4bfd82184ccb7",
+    "fixtures/negative/fetch/request-get-trailing.hex": "2b54fcec24e3dfdf601ccc20b4d5b53334743cffef9ef37e0a49cdbbe56090d1",
+    "fixtures/negative/fetch/request-head-trailing.hex": "214b599ef121892880ef3ac162dc9838e71fe48d00ce30eed388123c7742e20d",
+    "fixtures/negative/fetch/request-header-crlf.hex": "3b8c2f2e64651b6432c23bfc66771533d6d19912de00609dbf9845b74f5f7f6b",
+    "fixtures/negative/fetch/request-header-invalid-token.hex": "5e8a26a8a7f298b70a26bd8ca044d006ae1a9e59474221342e7201de1dbcf9f0",
+    "fixtures/negative/fetch/request-header-nul.hex": "2b5256bb89fdd847f46e37368db0cbf14396278cf1893147930d21f2ed4fa5a1",
+    "fixtures/negative/fetch/request-header-obs-text.hex": "4e5282f6d67e65efd8e4d233c1fc49a5ddf6e207c0c9683e71a725185c5dd69b",
+    "fixtures/negative/fetch/request-header-uppercase.hex": "b5ca9b1afda79bd5109d9053561e6c239d8b1fb21e39ae644221e81315a763ee",
+    "fixtures/negative/fetch/request-headers-null.hex": "17d4d756804fd48143e8aa1f5efd029c2a734ea41a703bed815f6b304e8ff899",
+    "fixtures/negative/fetch/request-headers-object.hex": "0f52b27e7ef00863cce960db50ca89f91fea31b6188a8d9078f52e51d0d14399",
+    "fixtures/negative/fetch/request-headers-omitted.hex": "e8d816492636da81707e627ea3083999c98c0c50356b3889870ee6b1bbfba234",
+    "fixtures/negative/fetch/request-noncanonical.hex": "f948df674e0364f1bf94fb5bf9d9a9303d15f7af5a364d4ae6adb7f4e5703fd8",
+    "fixtures/negative/fetch/request-ows.hex": "70c476d5dd14ed9b3f0ed138afd609b243cd49430fbb7c39566de4d17bc15773",
+    "fixtures/negative/fetch/request-path-control.hex": "dd6ab481e64f634b24cf78ea32b927183809f548b69b07bb909996f3016b6a9f",
+    "fixtures/negative/fetch/request-path-nonutf8.hex": "483ea382eb671e2fdbe6880c96c831355bb9ccb7e2d4542238de9e0e8fde5a5f",
+    "fixtures/negative/fetch/request-short.hex": "26aef28e26b12e2c2af200211f4a20102ce864f55fd19789089bd6a99b1a1e9a",
+    "fixtures/negative/fetch/request-tiana.hex": "c6e944b1fa31d3ab5195268dd725d2bb0c61d6e192962cdd6a0db8ff9212d2fa",
+    "fixtures/negative/fetch/request-trailing.hex": "df05c765dde06b87cf0facac0dc7bb8d2e5385657345fa1c98cd04fe587927ff",
+    "fixtures/negative/fetch/request-transfer-encoding.hex": "2a8bf55ecc1b986a3ce6dcb4b9898f88e1c467ad00a3b94bfa7019ebf04352be",
+    "fixtures/negative/fetch/request-unknown-field.hex": "20e544220d9207405f19f0e607762dde42b04cf15bd32c54cd29c99d3fd110b3",
+    "fixtures/negative/fetch/request-x-forwarded.hex": "267a5758c377f70b3100d437d5eed705de7a5e9df9ca00d3555826bfae4ee1fb",
+    "fixtures/negative/fetch/response-204-body.hex": "5dc57b471bddb608fcb59723c2a4a6adfebc0b10e3c2c3ec1a854ea5ae09d7c9",
+    "fixtures/negative/fetch/response-204-trailing.hex": "d3fe8a114499972cc3eac4c02260dd5b83403fa3d963b8e569c41d9ba10a8986",
+    "fixtures/negative/fetch/response-205-body.hex": "9ce8c41e5b7fd288fe9036e6e00faf256661892e9b90ef835afeba657bfeba97",
+    "fixtures/negative/fetch/response-205-trailing.hex": "7476edca3fa6500add3817c6990d9a26383f7bb09584c6d135909126d7b851b2",
+    "fixtures/negative/fetch/response-304-body.hex": "9b9e4ef0fb5f44e89f7186a404a1afefa5f4c2abfd02511b99278acd7f714680",
+    "fixtures/negative/fetch/response-304-trailing.hex": "b263b70f7ab511b9078614ad2fa2c9962211a41cc6a069935b56e8233a1aa2d5",
+    "fixtures/negative/fetch/response-head-trailing.hex": "eae89524c9506aef5f5f0c88ab07d439bcdacc2bc677efc8e406835edcfe5c2f",
+    "fixtures/negative/fetch/response-headers-null.hex": "fb02da0a6b8c1c5fcd72c04f4573ae7aeb1d4b4eac11e20905c4e5a37e126641",
+    "fixtures/negative/fetch/response-headers-object.hex": "328d922963a9c3c5e5285918cb7184d5215b7e7ccbd877a8e25fc9c5877c58b0",
+    "fixtures/negative/fetch/response-headers-omitted.hex": "b239de002af54f3002e528a3e074e7728850b28c9cd9135b93b94c2db6613d44",
+    "fixtures/negative/fetch/truncated-prefix.hex": "36b9693f879211e1ce53005b0d9b83675ca672b8bf4b354671da00e71f59b5ef"
+  },
+  "artifacts": {
+    "distribution-schema": {
+      "path": "conformance/v1/schema.json",
+      "sha256": "bc5e51ede57e27b67a096f279e5140d58d3f2dac6a0329123d3179b9c1b8f905",
+      "kind": "schema",
+      "encoding": "utf8"
+    },
+    "v1-baseline": {
+      "path": "conformance/v1/baseline/v1-authority.sha256",
+      "sha256": "d60373c385ad76dfabc42f1370a8c5196b0daf9bb6cda3a03d3351242ffa3837",
+      "kind": "baseline",
+      "encoding": "utf8"
+    },
+    "positive-corpus": {
+      "path": "conformance/v1/corpus/positive.json",
+      "sha256": "d500ccc77335d9ba3476d986aff5880b17a1decb147030272ba10248a2ec5490",
+      "kind": "corpus",
+      "encoding": "utf8"
+    },
+    "negative-corpus": {
+      "path": "conformance/v1/corpus/negative.json",
+      "sha256": "3fbc9553707e7bfbcca40af10d50a6638366cd302c1121a7b26dd8c60a4ac6d0",
+      "kind": "corpus",
+      "encoding": "utf8"
+    },
+    "public-envelope-corpus": {
+      "path": "conformance/v1/corpus/public-envelope.json",
+      "sha256": "6194a2742885f47fb642a70e0603945d1ef22f8efd5807b6ac955da8e7e96ef2",
+      "kind": "corpus",
+      "encoding": "utf8"
+    },
+    "fetch-schema": {
+      "path": "schemas/fetch-v1.schema.json",
+      "sha256": "6cea7b29705617a2d0e2b9196723504f2e26c07c06e43a2440a489bd56b55b75",
+      "kind": "schema",
+      "encoding": "utf8"
+    },
+    "fetch-protocol": {
+      "path": "protocols/fetch-over-https-v1.md",
+      "sha256": "1ed54cd150721e77ce6924bd7d1de2216e4e6f5cf60636429c3491112599c394",
+      "kind": "protocol",
+      "encoding": "utf8"
+    },
+    "public-connect-protocol": {
+      "path": "protocols/public-connect-v1.md",
+      "sha256": "b9e6fcecb4e09b5c36e025377ee1288d976dde5b8300ff18fa56a07f2f790a3d",
+      "kind": "protocol",
+      "encoding": "utf8"
+    },
+    "fetch-request-post": {
+      "path": "fixtures/fetch/request-post-golden.hex",
+      "sha256": "2c71dd0c340fb0f45dc1b6943b1d9739826480f515f0570e0cf9ab13dd023a7a",
+      "kind": "fetch-request",
+      "encoding": "hex",
+      "projection": "fetch-request-post-metadata"
+    },
+    "fetch-request-post-metadata": {
+      "path": "fixtures/fetch/request-post-metadata.json",
+      "sha256": "f6e6457d325a4d11f278a90efb9dc65e1d098cf33f5b282705fd38853aa5f586",
+      "kind": "projection",
+      "encoding": "utf8"
+    },
+    "fetch-response-200": {
+      "path": "fixtures/fetch/response-200-golden.hex",
+      "sha256": "ecade90b903fd2220810a1e8cccc2ac794a525c55ace846fe89153e563a1dbc0",
+      "kind": "fetch-response",
+      "encoding": "hex",
+      "projection": "fetch-response-200-metadata"
+    },
+    "fetch-response-200-metadata": {
+      "path": "fixtures/fetch/response-200-metadata.json",
+      "sha256": "b9e85572d86dc28610e2524c21184a3d5742861e6df652c31f3f8a37a0a7fad4",
+      "kind": "projection",
+      "encoding": "utf8"
+    },
+    "fetch-request-ts-null-metadata": {
+      "path": "fixtures/fetch/request-ts-null-metadata.json",
+      "sha256": "e5083fea40871cd718fad5d2886644a01345d986150911ff23539b74e212167f",
+      "kind": "projection",
+      "encoding": "utf8"
+    },
+    "fetch-response-ts-null-metadata": {
+      "path": "fixtures/fetch/response-ts-null-metadata.json",
+      "sha256": "a01768466cbc0e03ce505cac27232bd013623a7ecdac2de2fb71825aea65ffee",
+      "kind": "projection",
+      "encoding": "utf8"
+    },
+    "fetch-error-access-denied": {
+      "path": "fixtures/fetch/error-access-denied.json",
+      "sha256": "e7ca682447971b802afb80f7ce1870f568376771d153afa1ba6b3b127ad20b15",
+      "kind": "fetch-error",
+      "encoding": "utf8"
+    },
+    "fetch-error-auth-required": {
+      "path": "fixtures/fetch/error-auth-required.json",
+      "sha256": "d8e7512664933ffc9ece44aa8e1a3c96b1129ea77ca6b35996b4ee0fa06f3b78",
+      "kind": "fetch-error",
+      "encoding": "utf8"
+    },
+    "fetch-error-bad-gateway": {
+      "path": "fixtures/fetch/error-bad-gateway.json",
+      "sha256": "e3d53369191933c09da1f2f7147cc4da974381555bf54ba33829099537231892",
+      "kind": "fetch-error",
+      "encoding": "utf8"
+    },
+    "fetch-error-endpoint-not-found": {
+      "path": "fixtures/fetch/error-endpoint-not-found.json",
+      "sha256": "d9e61364bb675cb82014ecf536c6c6171a6d94b8cf41f40f2cb8efacaabcc5dc",
+      "kind": "fetch-error",
+      "encoding": "utf8"
+    },
+    "fetch-error-internal": {
+      "path": "fixtures/fetch/error-internal.json",
+      "sha256": "78524663489a2241a4b1787968e043d6362fcd7e04fb3fcaa99fa7da96ad5b56",
+      "kind": "fetch-error",
+      "encoding": "utf8"
+    },
+    "fetch-error-invalid-argument": {
+      "path": "fixtures/fetch/error-invalid-argument.json",
+      "sha256": "79fe7a3b4c28ee960b211bd61a17f8823a08e3cc5de17458f4a044eb32d29b8c",
+      "kind": "fetch-error",
+      "encoding": "utf8"
+    },
+    "fetch-error-method-not-allowed": {
+      "path": "fixtures/fetch/error-method-not-allowed.json",
+      "sha256": "c231838007f34314a5d701e49c3623ec9ac3c67dfa546a6617109e7cc39a0f26",
+      "kind": "fetch-error",
+      "encoding": "utf8"
+    },
+    "fetch-error-payload-too-large": {
+      "path": "fixtures/fetch/error-payload-too-large.json",
+      "sha256": "c11c74a6e2a3aa058abe7d6549a8724ed9944006feb38814dc10985b010a4f45",
+      "kind": "fetch-error",
+      "encoding": "utf8"
+    },
+    "fetch-error-rate-limited": {
+      "path": "fixtures/fetch/error-rate-limited.json",
+      "sha256": "4969da346da01820b9b1d8392dd501f4fa60f80013906e5ddb9e68479babec71",
+      "kind": "fetch-error",
+      "encoding": "utf8"
+    },
+    "fetch-error-request-timeout": {
+      "path": "fixtures/fetch/error-request-timeout.json",
+      "sha256": "8a7438bbef4c2f04c139159b4faf19447b3695f494aadb94918037e9a5752883",
+      "kind": "fetch-error",
+      "encoding": "utf8"
+    },
+    "fetch-error-timeout": {
+      "path": "fixtures/fetch/error-timeout.json",
+      "sha256": "f2c59555303f7896ffd8a393ced2d56f00c6ea6d34d2aceba8ba3dc4e936ee3a",
+      "kind": "fetch-error",
+      "encoding": "utf8"
+    },
+    "fetch-error-unavailable": {
+      "path": "fixtures/fetch/error-unavailable.json",
+      "sha256": "af24faeaea2bd09900564a3cb872ed2dc4dd58c75467ec1d44a350b390a0dd3b",
+      "kind": "fetch-error",
+      "encoding": "utf8"
+    },
+    "fetch-error-unsupported-media-type": {
+      "path": "fixtures/fetch/error-unsupported-media-type.json",
+      "sha256": "615d828af7d18b88c6e63c6fd63d7155646d3e1a5767310c39652bd69f743b79",
+      "kind": "fetch-error",
+      "encoding": "utf8"
+    },
+    "public-connect-authority": {
+      "path": "fixtures/gateway/public-connect-authority-v1.json",
+      "sha256": "683229edc8886b985ff6b29a99dd34da90bec9db15f6012aa12b07623d2658dc",
+      "kind": "public-connect-authority",
+      "encoding": "utf8"
+    },
+    "negative-fetch-error-duplicate-retry-after": {
+      "path": "fixtures/negative/fetch/error-duplicate-retry-after.json",
+      "sha256": "2bc154fc39877005e938d63dc7b34a4c58ada97fcaa0fa9dcfa4041c705293b1",
+      "kind": "fetch-negative",
+      "encoding": "utf8"
+    },
+    "negative-fetch-error-nonretry-retry-after": {
+      "path": "fixtures/negative/fetch/error-nonretry-retry-after.json",
+      "sha256": "bbb69dbaf6115167112eb46d5917eca97c6851bccfb66f0397b0a08f7c6f64ca",
+      "kind": "fetch-negative",
+      "encoding": "utf8"
+    },
+    "negative-fetch-error-rate-limited-fractional": {
+      "path": "fixtures/negative/fetch/error-rate-limited-fractional.json",
+      "sha256": "5de1099cf0ea6532da64ec0987c591370d2935e8ad72ba7109bad4a179254fe2",
+      "kind": "fetch-negative",
+      "encoding": "utf8"
+    },
+    "negative-fetch-error-rate-limited-missing": {
+      "path": "fixtures/negative/fetch/error-rate-limited-missing.json",
+      "sha256": "8ff126b9179730af6b632ac128927175af87b44c7dd4de53b74dce2a8bedb83a",
+      "kind": "fetch-negative",
+      "encoding": "utf8"
+    },
+    "negative-fetch-error-rate-limited-negative": {
+      "path": "fixtures/negative/fetch/error-rate-limited-negative.json",
+      "sha256": "12a99dd02cf04b23c4e872c986c9c99406f5e09b0eefd069b46b6053594c9d58",
+      "kind": "fetch-negative",
+      "encoding": "utf8"
+    },
+    "negative-fetch-error-rate-limited-null": {
+      "path": "fixtures/negative/fetch/error-rate-limited-null.json",
+      "sha256": "71a062275e208e29d4f6f1bf0aa0a6dbb37bc928d841267be6cb26a9ea802ce4",
+      "kind": "fetch-negative",
+      "encoding": "utf8"
+    },
+    "negative-fetch-error-rate-limited-string": {
+      "path": "fixtures/negative/fetch/error-rate-limited-string.json",
+      "sha256": "54c93ae0390596b1d584a721a234c6e4390953f7a5425fbf795c2c70db3bf37a",
+      "kind": "fetch-negative",
+      "encoding": "utf8"
+    },
+    "negative-fetch-error-rate-limited-too-large": {
+      "path": "fixtures/negative/fetch/error-rate-limited-too-large.json",
+      "sha256": "98c22406ab15dd2e4d03f7209e7e5945144bfb287590b36c6578bb2749c5d708",
+      "kind": "fetch-negative",
+      "encoding": "utf8"
+    },
+    "negative-fetch-error-rate-limited-zero": {
+      "path": "fixtures/negative/fetch/error-rate-limited-zero.json",
+      "sha256": "cc0ad1b9aa58592da4d85f098dfe2251ad051f3af2d6e8fc88f9804f506da570",
+      "kind": "fetch-negative",
+      "encoding": "utf8"
+    },
+    "negative-fetch-error-unknown-field": {
+      "path": "fixtures/negative/fetch/error-unknown-field.json",
+      "sha256": "2bc66ce0d707ca89e9abddf7a05f37a18d5d5165d92a9935f363c30fd5aa3950",
+      "kind": "fetch-negative",
+      "encoding": "utf8"
+    },
+    "negative-fetch-error-wrong-tuple": {
+      "path": "fixtures/negative/fetch/error-wrong-tuple.json",
+      "sha256": "301b6f01c0b02d5cfa334f02db0101c00a0c6b0bf871742a9f35f50212ea9283",
+      "kind": "fetch-negative",
+      "encoding": "utf8"
+    },
+    "negative-fetch-invalid-magic": {
+      "path": "fixtures/negative/fetch/invalid-magic.hex",
+      "sha256": "85dfa08575918be0c7e3fd07aaa465544381e9e2c2170ff91bf5f8689d8e42b8",
+      "kind": "fetch-negative",
+      "encoding": "hex"
+    },
+    "negative-fetch-metadata-too-large": {
+      "path": "fixtures/negative/fetch/metadata-too-large.hex",
+      "sha256": "15121c40a9670cf537f4bc407424d84e2b149dc31094224785bc8d69d394c642",
+      "kind": "fetch-negative",
+      "encoding": "hex"
+    },
+    "negative-fetch-metadata-truncated": {
+      "path": "fixtures/negative/fetch/metadata-truncated.hex",
+      "sha256": "3b15b9d9748465ee7aec8ea9e9a1f9e69f9b9e87dac695e234a02cf248ea86ad",
+      "kind": "fetch-negative",
+      "encoding": "hex"
+    },
+    "negative-fetch-nonzero-flags": {
+      "path": "fixtures/negative/fetch/nonzero-flags.hex",
+      "sha256": "23374b413ddddf0d8c57877ad1479e810f8f46e646df8bf623a7f284e79aba88",
+      "kind": "fetch-negative",
+      "encoding": "hex"
+    },
+    "negative-fetch-request-accept-encoding": {
+      "path": "fixtures/negative/fetch/request-accept-encoding.hex",
+      "sha256": "ccbb20114631dca30564d20247799f59d24383144756a31e62b881eb47ff0ed9",
+      "kind": "fetch-negative",
+      "encoding": "hex"
+    },
+    "negative-fetch-request-duplicate-authorization": {
+      "path": "fixtures/negative/fetch/request-duplicate-authorization.hex",
+      "sha256": "5be4f0df18ad4a28c6f612fffaa185df9faee784f7826d0724622b3e04e15e0e",
+      "kind": "fetch-negative",
+      "encoding": "hex"
+    },
+    "negative-fetch-request-duplicate-method": {
+      "path": "fixtures/negative/fetch/request-duplicate-method.hex",
+      "sha256": "d3d8076d0079d27eac209dc2c559bfc6b4f95c57894588c66338d88bb9e22732",
+      "kind": "fetch-negative",
+      "encoding": "hex"
+    },
+    "negative-fetch-request-expect": {
+      "path": "fixtures/negative/fetch/request-expect.hex",
+      "sha256": "6b7589bd03490740de1132e7d0c2456d39cc3cbd9304cee4b06529de231be0af",
+      "kind": "fetch-negative",
+      "encoding": "hex"
+    },
+    "negative-fetch-request-get-body": {
+      "path": "fixtures/negative/fetch/request-get-body.hex",
+      "sha256": "58e8c0c2ae6d28a08d8c6c3a05df30220c7da1499a2d410034a4bfd82184ccb7",
+      "kind": "fetch-negative",
+      "encoding": "hex"
+    },
+    "negative-fetch-request-get-trailing": {
+      "path": "fixtures/negative/fetch/request-get-trailing.hex",
+      "sha256": "2b54fcec24e3dfdf601ccc20b4d5b53334743cffef9ef37e0a49cdbbe56090d1",
+      "kind": "fetch-negative",
+      "encoding": "hex"
+    },
+    "negative-fetch-request-head-trailing": {
+      "path": "fixtures/negative/fetch/request-head-trailing.hex",
+      "sha256": "214b599ef121892880ef3ac162dc9838e71fe48d00ce30eed388123c7742e20d",
+      "kind": "fetch-negative",
+      "encoding": "hex"
+    },
+    "negative-fetch-request-header-crlf": {
+      "path": "fixtures/negative/fetch/request-header-crlf.hex",
+      "sha256": "3b8c2f2e64651b6432c23bfc66771533d6d19912de00609dbf9845b74f5f7f6b",
+      "kind": "fetch-negative",
+      "encoding": "hex"
+    },
+    "negative-fetch-request-header-invalid-token": {
+      "path": "fixtures/negative/fetch/request-header-invalid-token.hex",
+      "sha256": "5e8a26a8a7f298b70a26bd8ca044d006ae1a9e59474221342e7201de1dbcf9f0",
+      "kind": "fetch-negative",
+      "encoding": "hex"
+    },
+    "negative-fetch-request-header-nul": {
+      "path": "fixtures/negative/fetch/request-header-nul.hex",
+      "sha256": "2b5256bb89fdd847f46e37368db0cbf14396278cf1893147930d21f2ed4fa5a1",
+      "kind": "fetch-negative",
+      "encoding": "hex"
+    },
+    "negative-fetch-request-header-obs-text": {
+      "path": "fixtures/negative/fetch/request-header-obs-text.hex",
+      "sha256": "4e5282f6d67e65efd8e4d233c1fc49a5ddf6e207c0c9683e71a725185c5dd69b",
+      "kind": "fetch-negative",
+      "encoding": "hex"
+    },
+    "negative-fetch-request-header-uppercase": {
+      "path": "fixtures/negative/fetch/request-header-uppercase.hex",
+      "sha256": "b5ca9b1afda79bd5109d9053561e6c239d8b1fb21e39ae644221e81315a763ee",
+      "kind": "fetch-negative",
+      "encoding": "hex"
+    },
+    "negative-fetch-request-headers-null": {
+      "path": "fixtures/negative/fetch/request-headers-null.hex",
+      "sha256": "17d4d756804fd48143e8aa1f5efd029c2a734ea41a703bed815f6b304e8ff899",
+      "kind": "fetch-negative",
+      "encoding": "hex"
+    },
+    "negative-fetch-request-headers-object": {
+      "path": "fixtures/negative/fetch/request-headers-object.hex",
+      "sha256": "0f52b27e7ef00863cce960db50ca89f91fea31b6188a8d9078f52e51d0d14399",
+      "kind": "fetch-negative",
+      "encoding": "hex"
+    },
+    "negative-fetch-request-headers-omitted": {
+      "path": "fixtures/negative/fetch/request-headers-omitted.hex",
+      "sha256": "e8d816492636da81707e627ea3083999c98c0c50356b3889870ee6b1bbfba234",
+      "kind": "fetch-negative",
+      "encoding": "hex"
+    },
+    "negative-fetch-request-noncanonical": {
+      "path": "fixtures/negative/fetch/request-noncanonical.hex",
+      "sha256": "f948df674e0364f1bf94fb5bf9d9a9303d15f7af5a364d4ae6adb7f4e5703fd8",
+      "kind": "fetch-negative",
+      "encoding": "hex"
+    },
+    "negative-fetch-request-ows": {
+      "path": "fixtures/negative/fetch/request-ows.hex",
+      "sha256": "70c476d5dd14ed9b3f0ed138afd609b243cd49430fbb7c39566de4d17bc15773",
+      "kind": "fetch-negative",
+      "encoding": "hex"
+    },
+    "negative-fetch-request-path-control": {
+      "path": "fixtures/negative/fetch/request-path-control.hex",
+      "sha256": "dd6ab481e64f634b24cf78ea32b927183809f548b69b07bb909996f3016b6a9f",
+      "kind": "fetch-negative",
+      "encoding": "hex"
+    },
+    "negative-fetch-request-path-nonutf8": {
+      "path": "fixtures/negative/fetch/request-path-nonutf8.hex",
+      "sha256": "483ea382eb671e2fdbe6880c96c831355bb9ccb7e2d4542238de9e0e8fde5a5f",
+      "kind": "fetch-negative",
+      "encoding": "hex"
+    },
+    "negative-fetch-request-short": {
+      "path": "fixtures/negative/fetch/request-short.hex",
+      "sha256": "26aef28e26b12e2c2af200211f4a20102ce864f55fd19789089bd6a99b1a1e9a",
+      "kind": "fetch-negative",
+      "encoding": "hex"
+    },
+    "negative-fetch-request-tiana": {
+      "path": "fixtures/negative/fetch/request-tiana.hex",
+      "sha256": "c6e944b1fa31d3ab5195268dd725d2bb0c61d6e192962cdd6a0db8ff9212d2fa",
+      "kind": "fetch-negative",
+      "encoding": "hex"
+    },
+    "negative-fetch-request-trailing": {
+      "path": "fixtures/negative/fetch/request-trailing.hex",
+      "sha256": "df05c765dde06b87cf0facac0dc7bb8d2e5385657345fa1c98cd04fe587927ff",
+      "kind": "fetch-negative",
+      "encoding": "hex"
+    },
+    "negative-fetch-request-transfer-encoding": {
+      "path": "fixtures/negative/fetch/request-transfer-encoding.hex",
+      "sha256": "2a8bf55ecc1b986a3ce6dcb4b9898f88e1c467ad00a3b94bfa7019ebf04352be",
+      "kind": "fetch-negative",
+      "encoding": "hex"
+    },
+    "negative-fetch-request-unknown-field": {
+      "path": "fixtures/negative/fetch/request-unknown-field.hex",
+      "sha256": "20e544220d9207405f19f0e607762dde42b04cf15bd32c54cd29c99d3fd110b3",
+      "kind": "fetch-negative",
+      "encoding": "hex"
+    },
+    "negative-fetch-request-x-forwarded": {
+      "path": "fixtures/negative/fetch/request-x-forwarded.hex",
+      "sha256": "267a5758c377f70b3100d437d5eed705de7a5e9df9ca00d3555826bfae4ee1fb",
+      "kind": "fetch-negative",
+      "encoding": "hex"
+    },
+    "negative-fetch-response-204-body": {
+      "path": "fixtures/negative/fetch/response-204-body.hex",
+      "sha256": "5dc57b471bddb608fcb59723c2a4a6adfebc0b10e3c2c3ec1a854ea5ae09d7c9",
+      "kind": "fetch-negative",
+      "encoding": "hex"
+    },
+    "negative-fetch-response-204-trailing": {
+      "path": "fixtures/negative/fetch/response-204-trailing.hex",
+      "sha256": "d3fe8a114499972cc3eac4c02260dd5b83403fa3d963b8e569c41d9ba10a8986",
+      "kind": "fetch-negative",
+      "encoding": "hex"
+    },
+    "negative-fetch-response-205-body": {
+      "path": "fixtures/negative/fetch/response-205-body.hex",
+      "sha256": "9ce8c41e5b7fd288fe9036e6e00faf256661892e9b90ef835afeba657bfeba97",
+      "kind": "fetch-negative",
+      "encoding": "hex"
+    },
+    "negative-fetch-response-205-trailing": {
+      "path": "fixtures/negative/fetch/response-205-trailing.hex",
+      "sha256": "7476edca3fa6500add3817c6990d9a26383f7bb09584c6d135909126d7b851b2",
+      "kind": "fetch-negative",
+      "encoding": "hex"
+    },
+    "negative-fetch-response-304-body": {
+      "path": "fixtures/negative/fetch/response-304-body.hex",
+      "sha256": "9b9e4ef0fb5f44e89f7186a404a1afefa5f4c2abfd02511b99278acd7f714680",
+      "kind": "fetch-negative",
+      "encoding": "hex"
+    },
+    "negative-fetch-response-304-trailing": {
+      "path": "fixtures/negative/fetch/response-304-trailing.hex",
+      "sha256": "b263b70f7ab511b9078614ad2fa2c9962211a41cc6a069935b56e8233a1aa2d5",
+      "kind": "fetch-negative",
+      "encoding": "hex"
+    },
+    "negative-fetch-response-head-trailing": {
+      "path": "fixtures/negative/fetch/response-head-trailing.hex",
+      "sha256": "eae89524c9506aef5f5f0c88ab07d439bcdacc2bc677efc8e406835edcfe5c2f",
+      "kind": "fetch-negative",
+      "encoding": "hex"
+    },
+    "negative-fetch-response-headers-null": {
+      "path": "fixtures/negative/fetch/response-headers-null.hex",
+      "sha256": "fb02da0a6b8c1c5fcd72c04f4573ae7aeb1d4b4eac11e20905c4e5a37e126641",
+      "kind": "fetch-negative",
+      "encoding": "hex"
+    },
+    "negative-fetch-response-headers-object": {
+      "path": "fixtures/negative/fetch/response-headers-object.hex",
+      "sha256": "328d922963a9c3c5e5285918cb7184d5215b7e7ccbd877a8e25fc9c5877c58b0",
+      "kind": "fetch-negative",
+      "encoding": "hex"
+    },
+    "negative-fetch-response-headers-omitted": {
+      "path": "fixtures/negative/fetch/response-headers-omitted.hex",
+      "sha256": "b239de002af54f3002e528a3e074e7728850b28c9cd9135b93b94c2db6613d44",
+      "kind": "fetch-negative",
+      "encoding": "hex"
+    },
+    "negative-fetch-truncated-prefix": {
+      "path": "fixtures/negative/fetch/truncated-prefix.hex",
+      "sha256": "36b9693f879211e1ce53005b0d9b83675ca672b8bf4b354671da00e71f59b5ef",
+      "kind": "fetch-negative",
+      "encoding": "hex"
+    }
+  },
+  "corpora": {
+    "positive": {
+      "path": "conformance/v1/corpus/positive.json",
+      "sha256": "d500ccc77335d9ba3476d986aff5880b17a1decb147030272ba10248a2ec5490",
+      "selector": "positive_corpus"
+    },
+    "negative": {
+      "path": "conformance/v1/corpus/negative.json",
+      "sha256": "3fbc9553707e7bfbcca40af10d50a6638366cd302c1121a7b26dd8c60a4ac6d0",
+      "selector": "negative_corpus"
+    },
+    "public_envelope": {
+      "path": "conformance/v1/corpus/public-envelope.json",
+      "sha256": "6194a2742885f47fb642a70e0603945d1ef22f8efd5807b6ac955da8e7e96ef2",
+      "selector": "public_envelope_corpus"
+    }
+  },
+  "role_subsets": {
+    "contracts-go-v1": [
+      "distribution-schema",
+      "fetch-schema",
+      "fetch-protocol",
+      "public-connect-protocol",
+      "v1-baseline",
+      "positive_corpus",
+      "negative_corpus",
+      "public_envelope_corpus",
+      "public-connect-authority"
+    ],
+    "serverless-js-fetch": [
+      "distribution-schema",
+      "fetch-schema",
+      "positive_corpus",
+      "negative_corpus",
+      "public_envelope_corpus"
+    ],
+    "sdk-rust-connect": [
+      "public-connect-authority",
+      "public-connect-protocol"
+    ]
+  },
+  "consumers": {
+    "serverless-js": {
+      "repository": "serverless-js",
+      "commit": "47a3335c9b65da98aa7650278bd08385f8a71940",
+      "role": "serverless-js-fetch",
+      "provenance": "consumer must verify this manifest self-hash and the SHA-256 of every selected artifact before executing the shared corpus"
+    },
+    "sdk-rust": {
+      "repository": "sdk-rust",
+      "commit": "19c9c7da28f17c11700d515153cdecea600efe44",
+      "role": "sdk-rust-connect",
+      "provenance": "consumer must verify the frozen public-connect authority artifact before testing native CONNECT"
+    }
+  }
+}
